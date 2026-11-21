@@ -1,7 +1,7 @@
 {
   "name": "terminal-cloud",
   "version": "1.0.0",
-  "description": "Terminal ala VS Code / Codespaces / Cloud Shell - Web Terminal + Editor + File Explorer",
+  "description": "Terminal ala VS Code - dengan Auth Google, GitHub, OpenCode, Email",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
@@ -9,8 +9,13 @@
     "dev": "node server.js"
   },
   "dependencies": {
-    "【entity-express¦canonical_name=express】": "^4.19.2",
+    "express": "^4.19.2",
     "ws": "^8.18.0",
-    "node-pty": "^1.0.0"
+    "node-pty": "^1.0.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "cors": "^2.8.5"
   }
 }
