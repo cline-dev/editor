@@ -1,0 +1,16 @@
+{
+  "name": "terminal-cloud",
+  "version": "1.0.0",
+  "description": "Terminal ala VS Code / Codespaces / Cloud Shell - Web Terminal + Editor + File Explorer",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "【entity-express¦canonical_name=express】": "^4.19.2",
+    "ws": "^8.18.0",
+    "node-pty": "^1.0.0"
+  }
+}
