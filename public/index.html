@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terminal Cloud - Ala VS Code</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="menubar">
+  <div class="logo">Terminal Cloud</div>
+  <nav>
+    <button onclick="menuAction('file')">File</button>
+    <button onclick="menuAction('edit')">Edit</button>
+    <button onclick="menuAction('view')">View</button>
+    <button onclick="menuAction('go')">Go</button>
+    <button onclick="menuAction('run')">Run</button>
+    <button onclick="menuAction('terminal')">Terminal</button>
+    <button onclick="menuAction('help')">Help</button>
+  </nav>
+  <div class="menubar-right">
+    <input id="commandPaletteInput" placeholder="Ctrl+Shift+P - Cari arahan..." onkeydown="if(event.key==='Enter') runPalette(this.value)">
+    <span id="statusDot" class="dot">Connected</span>
+    <button onclick="toggleTheme()">Theme</button>
+  </div>
+</header>
+<div class="layout">
+  <aside class="activity-bar">
+    <button class="active" title="Explorer" onclick="showPanel('explorer')">📁</button>
+    <button title="Search" onclick="showPanel('search')">🔍</button>
+    <button title="Source Control" onclick="showPanel('git')">🌿</button>
+    <button title="Run & Debug" onclick="showPanel('debug')">▶️</button>
+    <button title="Extensions" onclick="showPanel('extensions')">🧩</button>
+    <div class="spacer"></div>
+    <button title="Account" onclick="showPanel('account')">👤</button>
+    <button title="Settings" onclick="showPanel('settings')">⚙️</button>
+  </aside>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <b id="panelTitle">EXPLORER</b>
+      <div>
+        <button onclick="createFilePrompt()">+ Fail</button>
+        <button onclick="createFolderPrompt()">+ Folder</button>
+        <button onclick="loadFiles()">↻</button>
+      </div>
+    </div>
+    <div id="panel-explorer">
+      <input id="searchFile" placeholder="Cari fail..." oninput="filterFiles(this.value)">
+      <div id="fileTree" class="file-tree"></div>
+      <div class="hint">
+        <p><b>Workspace:</b> <code>workspace/</code></p>
+        <p>Klik fail untuk edit. Klik kanan untuk rename / delete.</p>
+      </div>
+    </div>
+    <div id="panel-search" class="hidden">
+      <input id="globalSearch" placeholder="Cari dalam semua fail...">
+      <p class="muted">Cari teks dalam projek.</p>
+    </div>
+    <div id="panel-git" class="hidden">
+      <p><b>Source Control</b></p>
+      <code>git status</code><br><code>git add .</code><br><code>git commit -m "update"</code><br><code>git push</code>
+      <button onclick="sendToTerminal('git status\n')">Jalankan git status</button>
+    </div>
+    <div id="panel-debug" class="hidden">
+      <p><b>Run & Debug</b></p>
+      <button onclick="sendToTerminal('node workspace/app.js\n')">Run app.js</button>
+      <button onclick="sendToTerminal('npm run dev\n')">npm run dev</button>
+    </div>
+    <div id="panel-extensions" class="hidden">
+      <p><b>Extensions</b></p>
+      <label><input type="checkbox" checked> Prettier</label><br>
+      <label><input type="checkbox" checked> ESLint</label><br>
+      <label><input type="checkbox" checked> Python</label><br>
+      <label><input type="checkbox"> Tailwind</label>
+    </div>
+    <div id="panel-account" class="hidden"><p>Login GitHub / Google untuk sync dan Codespaces.</p></div>
+    <div id="panel-settings" class="hidden"><p>Font size: <input type="range" min="10" max="22" value="14" oninput="changeFont(this.value)"></p></div>
+  </aside>
+  <main class="main">
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-file="welcome">Welcome</button>
+    </div>
+    <section class="editor" id="editorArea">
+      <div class="editor-toolbar">
+        <span id="currentFile">Welcome</span>
+        <span id="editorMeta" class="muted"></span>
+        <div>
+          <button onclick="saveCurrentFile()">Save (Ctrl+S)</button>
+          <button onclick="runCurrentFile()">Run</button>
+          <button onclick="closeCurrentFile()">Close</button>
+        </div>
+      </div>
+      <textarea id="editor" spellcheck="false" placeholder="// Klik fail di kiri untuk mula edit..."></textarea>
+      <div class="editor-footer">
+        <span id="lineInfo">Ln 1, Col 1</span>
+        <span>UTF-8 - LF - JavaScript</span>
+        <span id="saveStatus">Saved</span>
+      </div>
+    </section>
+    <section class="terminal-panel">
+      <div class="terminal-toolbar">
+        <b>TERMINAL</b>
+        <span class="terminal-tabs">
+          <button onclick="newTerminal()">+ New Terminal</button>
+          <button onclick="splitTerminal()">Split</button>
+          <button onclick="clearTerminal()">Clear</button>
+          <button onclick="killTerminal()">Kill</button>
+        </span>
+        <select id="shellSelect"><option>bash</option><option>zsh</option><option>powershell</option></select>
+        <button onclick="toggleTerminal()">Hide / Show</button>
+      </div>
+      <div id="terminalContainer" class="terminal-container">
+        <div id="terminal" class="terminal"></div>
+        <div id="terminal2" class="terminal hidden"></div>
+      </div>
+      <div class="terminal-hint">Petua: Taip <code>ls</code> - <code>node workspace/app.js</code> - <code>git status</code> - <code>clear</code></div>
+    </section>
+  </main>
+</div>
+<footer class="statusbar">
+  <span>main*</span><span>0 Errors</span><span id="portInfo">Port: 3000</span><span>UTF-8</span><span>JavaScript</span><span>Terminal Cloud v1.0</span>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
