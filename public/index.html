@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terminal Cloud - Ala VS Code</title>
+<title>Editor Codebase</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -22,7 +22,7 @@
   <div class="menubar-right">
     <input id="commandPaletteInput" placeholder="Ctrl+Shift+P - Cari arahan..." onkeydown="if(event.key==='Enter') runPalette(this.value)">
     <span id="statusDot" class="dot">Connected</span>
-    <button onclick="toggleTheme()">Theme</button>
+    <button onclick="toggleTheme()">Theme</button><button onclick="logout()">Logout</button>
   </div>
 </header>
 <div class="layout">
@@ -124,5 +124,24 @@
 <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
 <script src="js/app.js"></script>
+
+<script> 
+// Protect - kalau tak login, tendang ke login.html
+fetch('/api/auth/me').then(r => {
+  if (!r.ok) location.href = '/login.html';
+  return r.json();
+}).then(d => {
+  if (d && d.user) {
+    const el = document.getElementById('statusDot');
+    if (el) el.textContent = '● ' + d.user.name + ' (' + d.user.provider + ')';
+  }
+});
+function logout() {
+  fetch('/api/auth/logout', { method: 'POST' }).then(() => {
+    localStorage.removeItem('token');
+    location.href = '/login.html';
+  });
+}
+</script>
 </body>
 </html>

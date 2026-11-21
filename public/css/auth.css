@@ -1,0 +1,19 @@
+body { margin:0; font-family: 【entity-Inter¦canonical_name=Inter】, Arial, sans-serif; background:#1e1e1e; color:#eee; }
+.auth-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+.auth-card { width:100%; max-width:420px; background:#252526; padding:32px; border-radius:16px; border:1px solid #333; }
+.logo { font-weight:800; font-size:20px; margin-bottom:12px; }
+h1 { margin:0; font-size:26px; }
+.sub { color:#aaa; font-size:14px; }
+.oauth-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin:20px 0; }
+.oauth { padding:10px; border-radius:8px; border:1px solid #444; background:#2d2d2d; color:#fff; cursor:pointer; font-weight:600; }
+.oauth.google { background:#fff; color:#000; }
+.oauth.【entity-github¦canonical_name=GitHub】 { background:#000; }
+.oauth.opencode { background:#7c3aed; border-color:#7c3aed; }
+.divider { text-align:center; color:#888; font-size:12px; margin:16px 0; border-top:1px solid #333; position:relative; }
+.divider span { background:#252526; padding:0 10px; position:relative; top:-8px; }
+label { display:block; font-size:13px; margin:12px 0 6px; }
+input { width:100%; box-sizing:border-box; padding:12px; border-radius:8px; border:1px solid #444; background:#1e1e1e; color:#fff; }
+.primary { width:100%; margin-top:18px; padding:12px; border:none; border-radius:8px; background:#007acc; color:#fff; font-weight:700; cursor:pointer; font-size:15px; }
+.msg { color:#ff6b6b; font-size:13px; min-height:18px; }
+.switch { text-align:center; font-size:13px; color:#aaa; }
+.switch a { color:#4da3ff; }

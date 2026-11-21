@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ms"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Sign In - Terminal Cloud</title><link rel="stylesheet" href="css/auth.css"></head>
+<body>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="logo">⬢ Terminal Cloud</div>
+    <h1>Welcome back</h1>
+    <p class="sub">Sign in untuk sambung ke terminal awak</p>
+    <div class="oauth-grid">
+      <button class="oauth google" onclick="location.href='/api/auth/google'">G Google</button>
+      <button class="oauth github" onclick="location.href='/api/auth/github'">GitHub</button>
+      <button class="oauth opencode" onclick="location.href='/api/auth/opencode'">OpenCode</button>
+    </div>
+    <div class="divider"><span>atau dengan email</span></div>
+    <form id="loginForm">
+      <label>Email</label><input id="email" type="email" placeholder="awak@email.com" required>
+      <label>Password</label><input id="password" type="password" placeholder="••••••••" required>
+      <button class="primary" type="submit">Sign In</button>
+      <p id="msg" class="msg"></p>
+    </form>
+    <p class="switch">Belum ada akaun? <a href="/signup.html">Sign Up percuma</a></p>
+  </div>
+</div>
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) });
+  const data = await res.json();
+  if (!res.ok) { document.getElementById('msg').textContent = data.error; return; }
+  localStorage.setItem('token', data.token);
+  location.href = '/';
+});
+</script>
+</body></html>

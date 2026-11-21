@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ms"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Sign Up - Terminal Cloud</title><link rel="stylesheet" href="css/auth.css"></head>
+<body>
+<div class="auth-wrap"><div class="auth-card">
+  <div class="logo">⬢ Terminal Cloud</div><h1>Create account</h1><p class="sub">Daftar percuma, terus dapat terminal</p>
+  <div class="oauth-grid">
+    <button class="oauth google" onclick="location.href='/api/auth/google'">G Google</button>
+    <button class="oauth github" onclick="location.href='/api/auth/github'">GitHub</button>
+    <button class="oauth opencode" onclick="location.href='/api/auth/opencode'">OpenCode</button>
+  </div>
+  <div class="divider"><span>atau dengan email</span></div>
+  <form id="form">
+    <label>Name</label><input id="name" placeholder="Nama awak" required>
+    <label>Email</label><input id="email" type="email" placeholder="awak@email.com" required>
+    <label>Password</label><input id="password" type="password" placeholder="Min 6 huruf" required>
+    <button class="primary" type="submit">Sign Up</button><p id="msg" class="msg"></p>
+  </form>
+  <p class="switch">Dah ada akaun? <a href="/login.html">Sign In</a></p>
+</div></div>
+<script>
+document.getElementById('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const body = { name: document.getElementById('name').value, email: document.getElementById('email').value, password: document.getElementById('password').value };
+  const res = await fetch('/api/auth/signup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const data = await res.json();
+  if (!res.ok) { document.getElementById('msg').textContent = data.error; return; }
+  localStorage.setItem('token', data.token); location.href = '/';
+});
+</script>
+</body></html>
