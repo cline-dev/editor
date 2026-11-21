@@ -1,0 +1,56 @@
+* { box-sizing: border-box; }
+body { margin:0; font-family: Inter, Segoe UI, Arial, sans-serif; background:#1e1e1e; color:#d4d4d4; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
+button { background:#2d2d2d; color:#eee; border:1px solid #3a3a3a; border-radius:6px; padding:6px 10px; cursor:pointer; }
+button:hover { background:#3a3a3a; }
+input, select, textarea { background:#252526; color:#eee; border:1px solid #3a3a3a; border-radius:6px; padding:7px 10px; }
+code { background:#252526; padding:2px 6px; border-radius:4px; font-size:12px; }
+.hidden { display:none !important; }
+.muted { color:#999; font-size:12px; }
+.menubar { display:flex; align-items:center; gap:16px; padding:8px 12px; background:#252526; border-bottom:1px solid #333; }
+.menubar .logo { font-weight:800; color:#fff; }
+.menubar nav { display:flex; gap:4px; }
+.menubar nav button { border:none; background:transparent; }
+.menubar-right { margin-left:auto; display:flex; gap:8px; align-items:center; }
+.menubar-right input { width:260px; }
+.dot { color:#4ade80; font-size:12px; }
+.layout { display:flex; flex:1; min-height:0; }
+.activity-bar { width:48px; background:#333333; display:flex; flex-direction:column; padding:8px 0; gap:4px; }
+.activity-bar button { background:transparent; border:none; font-size:20px; padding:10px 0; }
+.activity-bar button.active { background:#1e1e1e; border-left:2px solid #007acc; }
+.activity-bar .spacer { flex:1; }
+.sidebar { width:280px; background:#252526; border-right:1px solid #333; padding:12px; overflow:auto; }
+.sidebar-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.sidebar-head div { display:flex; gap:4px; }
+.sidebar-head button { padding:4px 7px; font-size:12px; }
+#searchFile { width:100%; margin-bottom:10px; }
+.file-tree { font-size:13px; }
+.file-item { padding:6px 8px; border-radius:6px; cursor:pointer; display:flex; justify-content:space-between; }
+.file-item:hover { background:#2d2d2d; }
+.file-item.active { background:#37373d; }
+.file-item.folder { font-weight:700; color:#fff; }
+.hint { margin-top:16px; background:#1e1e1e; padding:10px; border-radius:8px; font-size:12px; line-height:1.5; }
+.main { flex:1; display:flex; flex-direction:column; min-width:0; }
+.tabs { display:flex; gap:2px; background:#252526; padding:6px 6px 0; overflow:auto; }
+.tab { background:#2d2d2d; border:none; border-bottom:2px solid transparent; padding:8px 14px; white-space:nowrap; }
+.tab.active { background:#1e1e1e; border-bottom-color:#007acc; color:#fff; }
+.editor { display:flex; flex-direction:column; background:#1e1e1e; min-height:0; flex:1; }
+.editor-toolbar { display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-bottom:1px solid #333; }
+#editor { flex:1; width:100%; border:none; outline:none; resize:none; padding:16px; font-family: Consolas, monospace; font-size:14px; line-height:1.6; background:#1e1e1e; color:#d4d4d4; }
+.editor-footer { display:flex; justify-content:space-between; padding:6px 12px; font-size:12px; color:#999; border-top:1px solid #333; }
+.terminal-panel { background:#1e1e1e; border-top:1px solid #333; display:flex; flex-direction:column; height:340px; }
+.terminal-toolbar { display:flex; gap:8px; align-items:center; padding:8px 12px; flex-wrap:wrap; }
+.terminal-tabs { display:flex; gap:6px; }
+.terminal-container { flex:1; display:flex; gap:10px; padding:0 10px 6px; min-height:0; }
+.terminal { flex:1; background:#0c0c0c; padding:10px; overflow:hidden; border-radius:8px; }
+.terminal-hint { padding:4px 12px 8px; font-size:12px; color:#999; }
+.statusbar { display:flex; gap:16px; padding:6px 12px; background:#007acc; color:#fff; font-size:12px; }
+@media (max-width: 800px) {
+  .sidebar { width:200px; }
+  .menubar-right input { display:none; }
+  .terminal-panel { height:280px; }
+  .menubar nav { display:none; }
+}
+body.light { background:#f3f3f3; color:#222; }
+body.light .sidebar, body.light .menubar, body.light .editor, body.light .terminal-panel { background:#fff; color:#222; }
+body.light button, body.light input { background:#eee; color:#222; border-color:#ddd; }
+body.light #editor { background:#fff; color:#222; }
